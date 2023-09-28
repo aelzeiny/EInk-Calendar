@@ -13,9 +13,17 @@ HEIGHT = 480
 
 PADDING = 8  # See 8-point grid system: https://uxplanet.org/everything-you-should-know-about-8-point-grid-system-in-ux-design-b69cb945b18d
 
+PRIMARY_RED = '#e53031'
+SECONDARY_RED = '#ef9798'
+PRIMARY_BLACK = 'black'
+PRIMARY_BLANK = 'white'
+
+FONT_PATH = './fonts/NotoSans-Regular.ttf'
+
+
 def server() -> Tuple[bytes, bytes]:
-    font_helper = FontHelper('./Roboto-Regular.ttf')
-    image = Image.new('RGB', (WIDTH, HEIGHT), 'white')
+    font_helper = FontHelper(FONT_PATH)
+    image = Image.new('RGB', (WIDTH, HEIGHT), PRIMARY_BLANK)
     # seperate black & red layers
     layer = PillowBackend(image, mode=image.mode, font_helper=font_helper)
     red_layer = PillowBackend(image, mode=image.mode, font_helper=font_helper)
@@ -27,7 +35,7 @@ def server() -> Tuple[bytes, bytes]:
     # title box + summary
     event_summary = [
         TextSegment("Vamsi/Liz Lass 1:1 in "),
-        TextSegment("40 ", color='red', layer=red_layer),
+        TextSegment("40 ", color=PRIMARY_RED, layer=red_layer),
         TextSegment("minutes", underline=True)
     ]
     event_summary_bb, _ = layer.text_series(
@@ -37,9 +45,9 @@ def server() -> Tuple[bytes, bytes]:
     # Next events
     next_event_summary = [
         TextSegment("Lunch in "),
-        TextSegment("1 ", color='darkred', layer=red_layer),
+        TextSegment("1 ", color=SECONDARY_RED, layer=red_layer),
         TextSegment("hour", underline=True),
-        TextSegment(" 20 ", color='darkred', layer=red_layer),
+        TextSegment(" 20 ", color=SECONDARY_RED, layer=red_layer),
         TextSegment("minutes", underline=True)
     ]
     next_event_bb, xs = layer.text_series(
@@ -48,9 +56,9 @@ def server() -> Tuple[bytes, bytes]:
     )
     next_event_summary = [
         TextSegment("Trello Townhall in "),
-        TextSegment("2 ", color='darkred', layer=red_layer),
+        TextSegment("2 ", color=SECONDARY_RED, layer=red_layer),
         TextSegment("hours", underline=True),
-        TextSegment(" 30 ", color='darkred', layer=red_layer),
+        TextSegment(" 30 ", color=SECONDARY_RED, layer=red_layer),
         TextSegment("minutes", underline=True)
     ]
     next_event_bb, _ = layer.text_series(
@@ -65,7 +73,7 @@ def server() -> Tuple[bytes, bytes]:
     # previous event
     prev_event_summary = [
         TextSegment("Daily Standup started "),
-        TextSegment("5 ", color='darkred', layer=red_layer),
+        TextSegment("5 ", color=SECONDARY_RED, layer=red_layer),
         TextSegment("minutes", underline=True),
         TextSegment(" ago")
     ]
@@ -83,9 +91,9 @@ def server() -> Tuple[bytes, bytes]:
     cal_spans = [(50, 100), (300, 30)] # hard-coded for now; dynamic later
     for span_offset, span_width in cal_spans:
         cal_box = Box(bar.x + span_offset, bar.y, span_width, bar.height)
-        layer.fill_box(cal_box, color='white')
-        red_layer.fill_box(cal_box, color='salmon')
-        red_layer.outline_box(cal_box, color='white')
+        layer.fill_box(cal_box, color=PRIMARY_BLANK)
+        red_layer.fill_box(cal_box, color=SECONDARY_RED)
+        red_layer.outline_box(cal_box, color=PRIMARY_BLANK)
 
     # calendar/weather Header
     today = dt.date.today()
@@ -105,7 +113,7 @@ def server() -> Tuple[bytes, bytes]:
         color = 'black' if i == 0 else 'gray'
 
         if i == 0:
-            red_layer.outline_box(Box(weekday_offset, WEEKDAY_TOP_PADDING, WEEKDAY_TOTAL_WIDTH / NUM_DAYS, WEEKDAY_PADDING), color='red')
+            red_layer.outline_box(Box(weekday_offset, WEEKDAY_TOP_PADDING, WEEKDAY_TOTAL_WIDTH / NUM_DAYS, WEEKDAY_PADDING), color=PRIMARY_RED)
         layer.template_text(weekday_offset + WEEKDAY_PADDING / 2, WEEKDAY_TOP_PADDING, weekday, size=12, anchor='ma', color=color)
         layer.template_text(weekday_offset + WEEKDAY_PADDING / 2, WEEKDAY_TOP_PADDING + PADDING * 2, str(curr.day).zfill(2), size=16, anchor='ma', color=color)
         weekday_offset += WEEKDAY_TOTAL_WIDTH / NUM_DAYS
@@ -115,11 +123,11 @@ def server() -> Tuple[bytes, bytes]:
 #                    CLIENT
 ###############################################
 def client(black_bytes: bytes, red_bytes: bytes) -> Image:
-    client_image = Image.new('RGB', (WIDTH, HEIGHT), 'white')
+    client_image = Image.new('RGB', (WIDTH, HEIGHT), PRIMARY_BLANK)
     client_black_layer = ImageDraw.Draw(client_image)
     client_red_layer = ImageDraw.Draw(client_image)
-    deserialize(client_black_layer, 'Roboto-Regular.ttf', black_bytes)
-    deserialize(client_red_layer, 'Roboto-Regular.ttf', red_bytes)
+    deserialize(client_black_layer, FONT_PATH, black_bytes)
+    deserialize(client_red_layer, FONT_PATH, red_bytes)
     return client_image
     
 
