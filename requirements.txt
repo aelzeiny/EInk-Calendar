@@ -1,0 +1,3 @@
+icalendar
+requests
+Pillow~=10.0.1
