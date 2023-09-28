@@ -62,11 +62,11 @@ def server() -> Tuple[bytes, bytes]:
         TextSegment("minutes", underline=True)
     ]
     next_event_bb, _ = layer.text_series(
-        WIDTH / 2, next_event_bb.bottom + PADDING, next_event_summary, 
+        WIDTH / 2, next_event_bb.bottom + PADDING * 2, next_event_summary, 
         size=20, anchor='ma', color='gray'
     )
     next_bottom = layer.template_text(
-    WIDTH / 2, next_event_bb.bottom + PADDING * 4, '+4 more events', 
+    WIDTH / 2, next_event_bb.bottom + PADDING * 2, '+4 more events', 
     size=16, anchor='ma', color=(170, 170, 170)
     )
 
