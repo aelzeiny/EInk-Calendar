@@ -1,0 +1,47 @@
+{% macro format_delta(delta, is_primary) -%}
+    {% set hours = int(delta.total_seconds() // 3600) %}
+    {% set minutes = int((delta.total_seconds() % 3600) // 60) %}
+    {% set scheme = 'primary' if is_primary else 'secondary' %}
+    {% if abs(delta.total_seconds()) < 60 * 60 %}
+        <span class="{{ scheme }}-red">{{ minutes }}</span>
+        <span class="{{ scheme }} underlined">{{pluralize('minute', minutes)}}</span>
+    {% else  %}
+        <span class="{{ scheme }}-red">{{ hours }}</span>
+        <span class="{{ scheme }} underlined">{{ pluralize('hour', hour) }}</span>
+        <span class="{{ scheme }}-red">{{ minutes }}</span>
+        <span class="{{ scheme }} underlined">{{ pluralize('minute', minute) }}</span>
+    {% endif %}
+{%- endmacro %}
+
+{% macro previous_event(cal_event, now) -%}
+    {% set delta_start = now - cal_event.start_dttm %}
+    {% set delta_end = now - cal_event.end_dttm %}
+
+    {% if delta_end.total_seconds() < 0  %}
+    <div class="event">
+        <span class="secondary">{{ cal_event.summary }} started</span>
+        {{ format_delta(delta_start, is_primary=False) }}
+        <span class="secondary">ago</span>
+    </div>
+    {% else %}
+    <div class="event">
+        <span class="secondary">{{ cal_event.summary }} ended</span>
+        {{ format_delta(delta_end, is_primary=False) }}
+        <span class="secondary">ago</span>
+    </div>
+    {% endif %}
+{%- endmacro %}
+
+
+{% macro next_event(cal_event, now, is_primary) -%}
+    {% set event_class_name = "event-primary" if is_primary else ""  %}
+    {% set scheme = 'primary' if is_primary else 'secondary' %}
+    {% set delta = cal_event.start_dttm - now %}
+
+    <div class="event {{ event_class_name }}">
+        <span class="{{ scheme }}">{{ cal_event.summary }} in</span>
+        {{ format_delta(delta, is_primary=is_primary) }}
+    </div>
+{%- endmacro %}
+
+

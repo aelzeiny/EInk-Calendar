@@ -1,0 +1,395 @@
+<html>
+
+<head>
+
+    <style>
+        body {
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            width: 800px;
+            height: 480px;
+            border: 1px solid black;
+
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .cal-header {
+            justify-content: space-between;
+            font-size: 16;
+        }
+
+        span.primary {
+            color: black;
+        }
+
+        span.secondary {
+            color: gray;
+        }
+
+        span.tertiary {
+            color: rgb(170, 170, 170);
+        }
+
+        span.primary-red {
+            color: #e53031;
+        }
+
+        span.secondary-red {
+            color: #ef9798;
+        }
+
+        .cal {
+            width: fit-content;
+            margin: 0 auto;
+        }
+
+        .cal-boxes {
+            justify-content: center;
+        }
+
+        .cal-day {
+            display: flex;
+            flex-direction: column;
+            width: 48px;
+            height: 48px;
+            align-items: center;
+            padding-top: 8px;
+            color: gray;
+        }
+
+        .cal-primary {
+            color: black;
+            outline: 1px solid red;
+        }
+
+        span.underlined {
+            text-decoration: underline;
+        }
+
+        .events {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 104px;
+        }
+
+        .event {
+            color: gray;
+            font-size: 20;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .event-primary {
+            color: black;
+            font-size: 25;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            font-weight: bold;
+        }
+        .next-summary {
+            font-size: 16;
+        }
+
+        main.figure {
+            margin: auto;
+        }
+
+        figure {
+            position: relative;
+            width: 560px;
+            height: 16px;
+            background-color: rgb(170, 170, 170);
+            margin: 0;
+            margin-block: 0;
+            margin-inline: 0;
+        }
+
+        figure>span {
+            position: absolute;
+            background-color: #ef9798;
+            height: 100%;
+        }
+
+        figure>span.workday {
+            background-color: gray;
+            left: 47px;
+            width: 374px;
+        }
+
+        figure>span.pointer {
+            color: white;
+            background-color: transparent;
+            top: -2px;
+            font-size: 20px;
+        }
+
+        figure>span.active {
+            background-color: #e53031;
+        }
+
+        .figure-range {
+            display: flex;
+            justify-content: space-between;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="cal">
+    <div class="row cal-header">
+        <span class="primary">October 2023</span>
+        <span class="secondary">Mostly Sunny • 27° / 13°</span>
+    </div>
+    <div class="row cal-boxes">
+        
+            
+            
+            <div class="cal-day cal-primary">
+            
+                <span>Mo</span>
+                <span>02</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>Tu</span>
+                <span>03</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>We</span>
+                <span>04</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>Th</span>
+                <span>05</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>Fr</span>
+                <span>06</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>Sa</span>
+                <span>07</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>Su</span>
+                <span>08</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>Mo</span>
+                <span>09</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>Tu</span>
+                <span>10</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>We</span>
+                <span>11</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>Th</span>
+                <span>12</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>Fr</span>
+                <span>13</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>Sa</span>
+                <span>14</span>
+            </div>
+        
+            
+            
+            <div class="cal-day">
+            
+                <span>Su</span>
+                <span>15</span>
+            </div>
+        
+    </div>
+</main>
+
+    
+
+<main class="events">
+    
+    
+    
+
+    
+    <div class="event">
+        <span class="secondary">Daily Standup started</span>
+        
+    
+    
+    
+        <span class="secondary-red">5</span>
+        <span class="secondary underlined">minutes</span>
+    
+        <span class="secondary">ago</span>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <div class="event event-primary">
+        <span class="primary">Vamsi/Liz Lass 1:1 in</span>
+        
+    
+    
+    
+        <span class="primary-red">40</span>
+        <span class="primary underlined">minutes</span>
+    
+    </div>
+    
+    
+    
+    
+    
+    
+
+    <div class="event ">
+        <span class="secondary">Lunch in</span>
+        
+    
+    
+    
+        <span class="secondary-red">1</span>
+        <span class="secondary underlined">hours</span>
+        <span class="secondary-red">20</span>
+        <span class="secondary underlined">minutes</span>
+    
+    </div>
+    
+    
+    
+    
+    
+    
+
+    <div class="event ">
+        <span class="secondary">Trello Townhall in</span>
+        
+    
+    
+    
+        <span class="secondary-red">2</span>
+        <span class="secondary underlined">hours</span>
+        <span class="secondary-red">30</span>
+        <span class="secondary underlined">minutes</span>
+    
+    </div>
+    
+    
+
+    <div class="event next-summary">
+        
+        <span class="tertiary">and then that's it</span>
+        
+    </div>
+</main>
+
+    
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+<main class="figure">
+    <div class="figure-range">
+        <figcaption>8AM</figcaption>
+        <figcaption>5PM</figcaption>
+    </div>
+    <figure>
+        
+        
+        
+        <span class="active" style="left: 46px; width: 31px;"></span>
+        
+        
+        <span class="" style="left: 93px; width: 20px;"></span>
+        
+        
+        <span class="" style="left: 134px; width: 41px;"></span>
+        
+        
+        <span class="" style="left: 207px; width: 31px;"></span>
+        
+        <span class="pointer" style="left: 44;">•</figcaption>
+    </figure>
+</main>
+</body>
+
+</html>

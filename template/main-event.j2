@@ -1,0 +1,23 @@
+{% import "event.j2" as event_macros with context %}
+
+<main class="events">
+    {% if not vm.get_previous_event() is none %}
+    {{ event_macros.previous_event(vm.get_previous_event(), vm.now) }}
+    {% endif %}
+    {% set next_events = vm.get_next_events() %}
+    {% for i, event in enumerate(next_events[:3]) %}
+    {% if i == 0%}
+    {{ event_macros.next_event(event, vm.now, is_primary=True) }}
+    {% else %}
+    {{ event_macros.next_event(event, vm.now, is_primary=False) }}
+    {% endif %}
+    {% endfor %}
+
+    <div class="event next-summary">
+        {% if len(next_events) > 3 %}
+        <span class="tertiary">+{len(next_events - 3)} more events</span>
+        {% else %}
+        <span class="tertiary">and then that's it</span>
+        {% endif %}
+    </div>
+</main>

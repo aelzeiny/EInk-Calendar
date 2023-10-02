@@ -1,0 +1,19 @@
+<main class="cal">
+    <div class="row cal-header">
+        <span class="primary">{{ vm.now.strftime("%B %Y") }}</span>
+        <span class="secondary">{{ vm.weather }}</span>
+    </div>
+    <div class="row cal-boxes">
+        {% for i in range(14) %}
+            {% set curr_day = vm.now + dt.timedelta(days=i) %}
+            {% if i == 0 %}
+            <div class="cal-day cal-primary">
+            {% else %}
+            <div class="cal-day">
+            {% endif %}
+                <span>{{ curr_day.strftime("%a")[:2] }}</span>
+                <span>{{ str(curr_day.day).zfill(2) }}</span>
+            </div>
+        {% endfor %}
+    </div>
+</main>

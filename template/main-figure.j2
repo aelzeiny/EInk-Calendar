@@ -1,0 +1,33 @@
+
+{% set start_range = vm.timezone.localize(dt.datetime.combine(vm.now.date(), dt.time(9, 0))) %}
+{% set end_range = vm.timezone.localize(dt.datetime.combine(vm.now.date(), dt.time(17, 0))) %}
+
+{% if max_event_end() > end_range %}
+    {% set end_range = vm.timezone.localize(dt.datetime.combine(vm.now.date(), dt.time(min(max_event_end().time().hour + 1, 23)))) %}
+{% endif %}
+
+{% if min_event_start() < start_range %}
+    {% set start_range = vm.timezone.localize(dt.datetime.combine(vm.now.date(), dt.time(max(min_event_start().time().hour, 0)))) %}
+{% endif %}
+
+
+{% set secs_to_px = calc_conversion(start_range, end_range, bar_width=560)  %}
+
+{% macro calc_left_moment(moment) -%}{{ int(secs_to_px * (moment-start_range).total_seconds()) - 7 }}{%- endmacro %}
+{% macro calc_left(event) -%}{{ int(secs_to_px * (event.start_dttm-start_range).total_seconds()) }}{%- endmacro %}
+{% macro calc_width(event) -%}{{ int(secs_to_px * (event.end_dttm-event.start_dttm).total_seconds()) }}{%- endmacro %}
+
+<main class="figure">
+    <div class="figure-range">
+        <figcaption>{{ start_range.strftime("%I%p").lstrip(' 0') }}</figcaption>
+        <figcaption>{{ end_range.strftime("%I%p").lstrip(' 0') }}</figcaption>
+    </div>
+    <figure>
+        {# <span class="workday"></span> #}
+        {% for event in vm.daily_events %}
+        {% set event_active = 'active' if event.start_dttm <= vm.now < event.end_dttm  else '' %}
+        <span class="{{ event_active }}" style="left: {{ calc_left(event) }}px; width: {{ calc_width(event) }}px;"></span>
+        {% endfor %}
+        <span class="pointer" style="left: {{ calc_left_moment(vm.now) }};">•</figcaption>
+    </figure>
+</main>
